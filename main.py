@@ -272,31 +272,71 @@ dados = carregar_acao(ticker)
 # CRIAÇÃO DO GRÁFICO
 # ============================================================
 
+# Calcula a média móvel de 20 dias
+dados["MM20"] = dados["Close"].rolling(window=20).mean()
+
+# Calcula a média móvel de 50 dias
+dados["MM50"] = dados["Close"].rolling(window=50).mean()
+
+# Calcula a média móvel de 200 dias
+dados["MM200"] = dados["Close"].rolling(window=200).mean()
+
+
 # Define o tamanho da janela do gráfico
 plt.figure(figsize=(12, 6))
 
-# Plota a evolução do preço de fechamento ao longo do período
+
+# Plota o preço de fechamento
 plt.plot(
     dados.index,
     dados["Close"],
-    label=ticker
+    label="Preço"
 )
 
+
+# Plota a média móvel de 20 dias
+plt.plot(
+    dados.index,
+    dados["MM20"],
+    label="MM20"
+)
+
+
+# Plota a média móvel de 50 dias
+plt.plot(
+    dados.index,
+    dados["MM50"],
+    label="MM50"
+)
+
+
+# Plota a média móvel de 200 dias
+plt.plot(
+    dados.index,
+    dados["MM200"],
+    label="MM200"
+)
+
+
 # Define o título do gráfico
-plt.title(f"Gráfico de {ticker}")
+plt.title(f"Tendência de {ticker}")
+
 
 # Define o nome do eixo horizontal
 plt.xlabel("Data")
 
+
 # Define o nome do eixo vertical
 plt.ylabel("Preço (R$)")
 
-# Adiciona uma grade para facilitar a leitura dos valores
+
+# Adiciona uma grade
 plt.grid(True)
+
 
 # Exibe a legenda
 plt.legend()
 
-# Abre a janela do gráfico
-plt.show()
 
+# Exibe o gráfico
+plt.show()
